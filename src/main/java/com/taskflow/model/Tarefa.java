@@ -1,6 +1,9 @@
 package com.taskflow.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
@@ -9,9 +12,17 @@ public class Tarefa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "O título é obrigatório")
+    @Size(min = 3, max = 100, message = "O título deve ter entre 3 e 100 caracteres")
     private String titulo;
+
+    @Size(max = 500, message = "A descrição não pode ultrapassar 500 caracteres")
     private String descricao;
+
     private boolean concluida = false;
+
+    @FutureOrPresent(message = "O prazo deve ser hoje ou uma data futura")
     private LocalDate prazo;
 
     // Getters e Setters
